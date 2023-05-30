@@ -19,7 +19,7 @@ module.exports = function (grunt) {
           // (compared to triggering when sass completes)
           // allows livereload to not do a full page refresh
           'public/stylesheets/*.css',
-          'views/**/*.ejs',
+          'views/**/*.jsx',
           'public/scripts/**/*.js',
           'public/images/**/*'
         ]

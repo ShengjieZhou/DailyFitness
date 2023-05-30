@@ -1,9 +1,21 @@
 import React from 'react';
+import Header from './layout/Header.jsx';
+import Sidebar from './layout/Sidebar.jsx';
+import Home from './Home.jsx';
 
-export default function Index() {
+
+
+
+
+
+
+
+export default function Defaut() {
   return (
     <>
-      <h1>aaaadadw</h1> 
+    <Header/>
+    <Sidebar/>
+    <Home/>
     </>
   );
 }

@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
-var database = require('../models/DailyFitness.js');
+var database = require('../models/dailyFitness.js');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('Defaut', { title: 'Express' });
 });
 
 router.get('/data', async (req, res) => {

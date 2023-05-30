@@ -1,7 +1,7 @@
 'use strict';
 var cradle = require('cradle');
 var config = require('./config.js');
-var someDB = new(cradle.Connection)(config.database.couch.host, config.database.couch.port, config.database.couch.options).database('DailyFitness');
+var someDB = new(cradle.Connection)(config.database.couch.host, config.database.couch.port, config.database.couch.options).database('test');
 
 
 someDB.exists(function (err, exists) {
