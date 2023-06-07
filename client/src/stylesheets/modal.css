@@ -1,0 +1,10 @@
+  .modal {
+    position: absolute;
+    top: 100px;
+    left: 500px;
+    right: 500px;
+    bottom: 200px;
+    background-color: white;
+    border: 2px solid rgb(150, 150, 150); 
+    border-radius: 8px; 
+}

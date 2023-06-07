@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import Sidebar from './Sidebar.js';
 import Header from './Header.js';
-import ReceiptResult from './ReceiptResult.js';
+import CalorieResult from './CalorieResult.js';
 
 export default function Calorie() {
     const [answer, setAnswer] = useState('');
@@ -70,7 +70,7 @@ export default function Calorie() {
                         </div>
                         <div className="flex-1"> 
                             <div className="isolate"> 
-                                <ReceiptResult data={nutritionResult} />
+                                <CalorieResult data={nutritionResult} />
                             </div>
                         </div>
                     </div>
