@@ -1,3 +1,5 @@
+import UserServiceController from "./Controller/UserServiceController";
+
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -10,39 +12,46 @@ const username = 'admin';
 const password = 'Password';
 
 const credentials = Buffer.from(`${username}:${password}`).toString('base64');
-const headers = { Authorization: `Basic ${credentials}` };
+const headers = {Authorization: `Basic ${credentials}`};
 
 app.use(cors());
 app.use(bodyParser.json());
 
 app.get('/api/data', (req, res) => {
-  const data = {
-    message: 'Hello from the backend!'
-  };
-  res.json(data);
+    const data = {
+        message: 'Hello from the backend!'
+    };
+    res.json(data);
 });
 
 app.get('/api/recipe', (req, res) => {
-  const type = req.query.type; 
-  let url = service + 'receipt/_design/api/_view/' + type + 'Recipe';
-  axios.get( url, { headers })
-    .then(response => {
-      const results = response.data.rows;
-      res.json(results); 
-    })
-    .catch(error => {
-      console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' }); 
-    });
+    const type = req.query.type;
+    let url = service + 'receipt/_design/api/_view/' + type + 'Recipe';
+    axios.get(url, {headers})
+        .then(response => {
+            const results = response.data.rows;
+            res.json(results);
+        })
+        .catch(error => {
+            console.error(error);
+            res.status(500).json({error: 'Internal Server Error'});
+        });
 });
 
 app.post('/api/newRecipe', (req, res) => {
-  const newData = req.body; 
-  //插入数据库 待完成
-  console.log(newData);
-  res.sendStatus(200); 
+    const newData = req.body;
+    //插入数据库 待完成
+    console.log(newData);
+    res.sendStatus(200);
+});
+
+app.post('/api/recordUserHistory', (req, res) => UserServiceController(req, res, service).recordSearchHistory());
+
+app.delete('/api/deleteUserHistory/:historyId',(req, res) => {
+    const {historyId} = req.params;
+    UserServiceController(req,res,service).deleteSearchHistory(historyId)
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });
