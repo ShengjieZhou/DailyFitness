@@ -1,4 +1,5 @@
-import UserHistoryService from "../Service/UserHistoryService";
+//import UserHistoryService from "../Service/UserHistoryService";
+const UserHistoryService = require("../Service/UserHistoryService");
 
 const UserServiceController = (req, res, dbAddress) => {
     const userHistoryService = new UserHistoryService(dbAddress);
@@ -28,5 +29,6 @@ const UserServiceController = (req, res, dbAddress) => {
     };
 }
 
-export default UserServiceController;
+module.exports = UserServiceController;
+//export default UserServiceController;
 

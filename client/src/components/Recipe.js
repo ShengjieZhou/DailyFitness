@@ -17,7 +17,7 @@ export default function Recipe() {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [recipe, setRecipe] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [newRecipe, setNewRecipe] = useState({ title: '', description: '', type: '' });
+  const [newRecipe, setNewRecipe] = useState({ type: '', title: '', step: '' });
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
@@ -75,7 +75,7 @@ export default function Recipe() {
       .then(response => {
         setTimeout(() => {
           alert('New recipe added successfully!');
-          setNewRecipe({ title: '', description: '', type: '' });
+          setNewRecipe({ title: '', step: '', type: '' });
           closeModal();
         }, 100); 
         console.log('New recipe added successfully!');
@@ -122,12 +122,12 @@ export default function Recipe() {
               />
             </div>
             <div className="mb-4 flex flex-col">
-              <label className="font-bold">Description of the receipt:</label>
+              <label className="font-bold">Step of the receipt:</label>
               <textarea
                 type="text"
-                name="description"
+                name="step"
                 style={{ height: '10rem' }}
-                value={newRecipe.description}
+                value={newRecipe.step}
                 onChange={handleInputChange}
                 className="rounded-md border border-slate-300 py-2 pl-2 pr-2 shadow-sm focus:ring-sky-500 focus:ring-1"
               ></textarea>

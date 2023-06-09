@@ -23,5 +23,6 @@ const UserHistoryService = (dbAddress) => {
     };
 }
 
-export default UserHistoryService;
+//export default UserHistoryService;
+module.exports = UserHistoryService;
 

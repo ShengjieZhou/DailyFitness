@@ -1,11 +1,16 @@
-import UserServiceController from "./Controller/UserServiceController";
+const UserServiceController = require("./Controller/UserServiceController");
+const RecipeController = require("./Controller/RecipeController");
 
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const axios = require('axios');
 const app = express();
+
 const PORT = 5000;
+
+/**
+ * database connection
+ */
 const service = 'http://localhost:5984/';
 
 const username = 'admin';
@@ -14,9 +19,16 @@ const password = 'Password';
 const credentials = Buffer.from(`${username}:${password}`).toString('base64');
 const headers = {Authorization: `Basic ${credentials}`};
 
+/**
+ * middleware
+ */
 app.use(cors());
 app.use(bodyParser.json());
 
+/**
+ * api routes
+ */
+//test api
 app.get('/api/data', (req, res) => {
     const data = {
         message: 'Hello from the backend!'
@@ -24,25 +36,16 @@ app.get('/api/data', (req, res) => {
     res.json(data);
 });
 
+//get recipe
 app.get('/api/recipe', (req, res) => {
     const type = req.query.type;
-    let url = service + 'receipt/_design/api/_view/' + type + 'Recipe';
-    axios.get(url, {headers})
-        .then(response => {
-            const results = response.data.rows;
-            res.json(results);
-        })
-        .catch(error => {
-            console.error(error);
-            res.status(500).json({error: 'Internal Server Error'});
-        });
+    RecipeController(req, res, service, headers).getRecipe(type);
 });
 
+//add recipe 
 app.post('/api/newRecipe', (req, res) => {
-    const newData = req.body;
-    //插入数据库 待完成
-    console.log(newData);
-    res.sendStatus(200);
+  let newData = req.body;
+  RecipeController(req, res, service, headers).addRecipe(newData);
 });
 
 app.post('/api/recordUserHistory', (req, res) => UserServiceController(req, res, service).recordSearchHistory());
@@ -52,6 +55,9 @@ app.delete('/api/deleteUserHistory/:historyId',(req, res) => {
     UserServiceController(req,res,service).deleteSearchHistory(historyId)
 });
 
+/**
+ * Startup server
+ */
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
