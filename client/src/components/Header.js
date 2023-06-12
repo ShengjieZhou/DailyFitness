@@ -17,7 +17,7 @@ const Header = () => {
           <div className="text-base justify-center items-center gap-1.5 flex 3xl:flex-1 flex-row 3xl:justify-end">
             <div className="mx-2.5 gap-1.5 hidden lg:flex">
               <div className="flex flex-auto sm:flex-1">
-                <a className="active:scale-95 transition-transform w-full text-center outline-link py-1.5 px-1.5 xs:px-3 sm:px-4 rounded-full capitalize hover:bg-primary/5 " href="/">GymMap</a>
+                <a className="active:scale-95 transition-transform w-full text-center outline-link py-1.5 px-1.5 xs:px-3 sm:px-4 rounded-full capitalize hover:bg-primary/5 " href="/map">GymMap</a>
               </div>
               <div className="flex flex-auto sm:flex-1">
                 <a className="active:scale-95 transition-transform w-full text-center outline-link py-1.5 px-1.5 xs:px-3 sm:px-4 rounded-full capitalize hover:bg-primary/5 " href="/calorie">FoodCAL</a>
