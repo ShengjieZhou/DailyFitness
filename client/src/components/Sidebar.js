@@ -38,7 +38,7 @@ function Sidebar() {
                           </a>
                         </li>
                         <li>
-                          <a title="Fitness video" target="" className="p-2 pr-2 w-full rounded-none lg:rounded-r-2xl text-left hover:bg-gray-5 relative flex items-center justify-between pl-5 text-base font-bold text-primary" href="/">
+                          <a title="Fitness video" target="" className="p-2 pr-2 w-full rounded-none lg:rounded-r-2xl text-left hover:bg-gray-5 relative flex items-center justify-between pl-5 text-base font-bold text-primary" href="/video">
                             <span>Fitness video</span>
                             <span className="pr-1 text-tertiary ">
                               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" className="duration-100 ease-in transition -rotate-90" style={{ minWidth: '20px', minHeight: '20px' }}>
