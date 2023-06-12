@@ -2,7 +2,7 @@
 
 ### Address Project
 * [React Frontend](http://localhost:3000/)
-* [CouchDb](http://localhost:5984/_utils/)
+* [CouchDB](http://localhost:5984/_utils/)
 * Server port : 5000
 
 ### Api publique

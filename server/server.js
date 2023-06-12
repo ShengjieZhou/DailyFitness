@@ -44,15 +44,20 @@ app.get('/api/recipe', (req, res) => {
 
 //add recipe 
 app.post('/api/newRecipe', (req, res) => {
-  let newData = req.body;
-  RecipeController(req, res, service, headers).addRecipe(newData);
+    let newData = req.body;
+    RecipeController(req, res, service, headers).addRecipe(newData);
 });
 
-app.post('/api/recordUserHistory', (req, res) => UserServiceController(req, res, service).recordSearchHistory());
+// record user's search history
+app.post('/api/diary/recordUserHistory', (req, res) => UserServiceController(req, res, service).recordSearchHistory());
 
-app.delete('/api/deleteUserHistory/:historyId',(req, res) => {
+// fetch user's search history
+app.get('/api/diary/fetchUserHistory', (req, res) => UserServiceController(req, res).fetchSearchHistory());
+
+// delete user's search history by id
+app.delete('/api//diary/deleteUserHistory/:historyId', (req, res) => {
     const {historyId} = req.params;
-    UserServiceController(req,res,service).deleteSearchHistory(historyId)
+    UserServiceController(req, res, service).deleteSearchHistory(historyId)
 });
 
 /**
