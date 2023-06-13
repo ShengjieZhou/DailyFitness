@@ -7,7 +7,13 @@ import "../stylesheets/Card.css"
 const api = 'http://localhost:5000';
 
 const Diary = () => {
-    const [searchHistory, setSearchHistory] = useState([{key:{time: '2023-06-03 09:15:00', object: 'search history', target: 'function'}}]);
+    const [searchHistory, setSearchHistory] = useState([{
+        key: {
+            time: '2023-06-03 09:15:00',
+            object: 'search history',
+            target: 'function'
+        }
+    }]);
 
     useEffect(() => {
         fetchSearchHistory();
@@ -39,8 +45,8 @@ const Diary = () => {
                     <Card.Body>
                         <Card.Title className="text-center" style={{color: "gray"}}>{record.key.time}</Card.Title>
                         <Card.Text className="my-card-text">
-                            <span style={{ color: 'orange' }}>Search History: </span>{record.key.target}<br/>
-                            <span style={{ color: 'orange' }}>Search for: </span>{record.key.object}
+                            <span style={{color: 'orange'}}>Search History: </span>{record.key.target}<br/>
+                            <span style={{color: 'orange'}}>Search for: </span>{record.key.object}
                         </Card.Text>
                         <div className="delete-button" onClick={() => deleteHistory(record.id, record.key._rev)}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -61,11 +67,13 @@ const Diary = () => {
             <div className="grid lg:grid-cols-sidebar-content">
                 <Sidebar/>
                 <main className="min-w-0 isolate">
-                    <div>
-                        <h1 className="mdx-heading mt-0 text-primary -mx-.5 break-words text-5xl font-bold">
-                            Food Diary
-                        </h1>
-                        <CardList searchHistory={searchHistory}/>
+                    <div className="pl-5 flex">
+                        <div className="px-5 flex-1">
+                            <h1 className="mdx-heading mt-0 mb-4 text-primary -mx-.5 break-words text-5xl font-bold">
+                                Food Diary
+                            </h1>
+                            <CardList searchHistory={searchHistory}/>
+                        </div>
                     </div>
                 </main>
             </div>

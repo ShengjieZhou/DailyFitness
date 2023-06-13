@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from './Header';  
 import Sidebar from './Sidebar';  
-
+import DefaultPage from '../assets/DefaultPage.png';
 
 function Default() {
   const [message, setMessage] = useState('');
@@ -22,10 +22,7 @@ function Default() {
           <div className="pl-0">
             <div className="px-5 sm:px-12 pt-3.5">
               <div className="max-w-4xl ml-0 2xl:mx-auto">
-                <h1 className="mdx-heading mt-0 text-primary -mx-.5 break-words text-5xl font-bold">
-                Default page
-                </h1>
-                <span aria-label="API Message">{message}</span>
+                <img src={DefaultPage} alt="Default Page"/>
               </div>
             </div>
           </div>
