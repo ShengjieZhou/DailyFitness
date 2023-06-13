@@ -4,14 +4,15 @@ import Sidebar from './Sidebar.js';
 import Header from './Header.js';
 import DietaryDetails from './DietaryDetails.js';
 import IngredientTable from './IngredientTable.js';
-import Suggestion from './Suggestion.js';
+// import Advice from './Advice.js';
 
 export default function Calorie() {
     const [answer, setAnswer] = useState('');
     const [error, setError] = useState(false);
     const [status, setStatus] = useState('typing');
     const [diataryResult, setDiataryResult] = useState(null);
-    const api = 'https://api.edamam.com/api/nutrition-details?app_id=285d285d&app_key=71f2c3d39496a913657716d5af3f17f9';
+    const [advice, setAdvice] = useState(null);
+    const api = 'http://localhost:5000/api/dietary';
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -21,6 +22,8 @@ export default function Calorie() {
         try {
             const response = await submitForm(parsedAnswer);
             setDiataryResult(response);
+            const adviceResult = await fetchAdvice(response.dietLabels);
+            setAdvice(adviceResult.map(item => item.value));
             setStatus('success');
             setError(false);
         } catch (err) {
@@ -56,6 +59,17 @@ export default function Calorie() {
         }
     };
 
+    async function fetchAdvice(data) {
+        const url = `http://localhost:5000/api/advice?labels=${data.join(',')}`;
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            throw new Error('Network response was not ok');
+        }
+    }
+
 
     return (
         <>
@@ -78,7 +92,13 @@ export default function Calorie() {
                                     Please check the ingredient spelling or if you have entered a quantities for the ingredients.</p>}
                             </form>
                             <IngredientTable data={diataryResult} />
-                            <Suggestion data={diataryResult} />
+                            <div className="my-8 text-base">
+                                {advice && <p>Analysis of your dietary:</p>}
+                                <ul className="list-disc pt-4">
+                                    {advice && advice.map((item, index) => <li className='py-4' key={index}>{item}</li>)}
+
+                                </ul>
+                            </div>
                         </div>
 
                         <div className="flex-1">
