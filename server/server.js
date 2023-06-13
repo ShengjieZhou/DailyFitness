@@ -58,15 +58,19 @@ app.post('/api/newRecipe', (req, res) => {
 });
 
 // record user's search history
-app.post('/api/diary/recordUserHistory', (req, res) => UserServiceController(req, res, service).recordSearchHistory());
+app.post('/api/diary/recordUserHistory/', (req, res) => {
+    const {object, target} = req.body;
+    UserServiceController(req, res, service).recordSearchHistory(object, target)
+});
 
 // fetch user's search history
-app.get('/api/diary/fetchUserHistory', (req, res) => UserServiceController(req, res).fetchSearchHistory());
+app.get('/api/diary/fetchUserHistory', (req, res) => UserServiceController(req, res, service).fetchSearchHistory());
 
 // delete user's search history by id
-app.delete('/api//diary/deleteUserHistory/:historyId', (req, res) => {
-    const { historyId } = req.params;
-    UserServiceController(req, res, service).deleteSearchHistory(historyId)
+app.delete('/api/diary/deleteUserHistory/:historyId', (req, res) => {
+    const {historyId} = req.params;
+    const {rev} = req.query;
+    UserServiceController(req, res, service).deleteSearchHistory(historyId, rev)
 });
 
 app.get('/api/places/nearbysearch', async (req, res) => {

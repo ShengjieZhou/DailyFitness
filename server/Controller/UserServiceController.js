@@ -1,15 +1,14 @@
-//import UserHistoryService from "../Service/UserHistoryService";
 const UserHistoryService = require("../Service/UserHistoryService");
 
 const UserServiceController = (req, res, dbAddress) => {
     const userHistoryService = new UserHistoryService(dbAddress);
-    const {object} = req.body;
 
     const handleRequest = (promise, successMessage, errorMessage) => {
         promise
             .then(response => {
                 console.log(successMessage, response.data);
-                res.status(200).json({ message: successMessage });
+                const results = response.data.rows;
+                res.json(results);
             })
             .catch(error => {
                 console.error(errorMessage, error);
@@ -17,16 +16,16 @@ const UserServiceController = (req, res, dbAddress) => {
             });
     };
 
-    const recordSearchHistory = () => {
-        handleRequest(userHistoryService.recordSearchHistory(object),'Search history saved:','Search history failed to save:')
+    const recordSearchHistory = (object, target) => {
+        handleRequest(userHistoryService.recordSearchHistory(object, target),'Search history saved:','Search history failed to save:')
     }
 
     const fetchSearchHistory = () => {
         handleRequest(userHistoryService.fetchSearchHistory(),'Fetch History Success:','Failed to fetch history:')
     }
 
-    const deleteSearchHistory = (historyId) => {
-        handleRequest(userHistoryService.deleteSearchHistory(historyId),'History deleted:', 'History failed to delete:')
+    const deleteSearchHistory = (historyId, rev) => {
+        handleRequest(userHistoryService.deleteSearchHistory(historyId, rev),'History deleted:', 'History failed to delete:')
     }
     return {
         recordSearchHistory, fetchSearchHistory, deleteSearchHistory
@@ -34,5 +33,4 @@ const UserServiceController = (req, res, dbAddress) => {
 }
 
 module.exports = UserServiceController;
-//export default UserServiceController;
 

@@ -49,6 +49,7 @@ export default function Recipe() {
           console.error(error);
         });
     }
+    recordSearchHistory(selectedOption);
   };
 
   const handleAdd = (event) => {
@@ -85,6 +86,21 @@ export default function Recipe() {
         console.error(error);
       });
   };
+
+  const recordSearchHistory = (data) => {
+    const requestBody = {
+      object: data,
+      target: "Recipe Search"
+    };
+    fetch(`http://localhost:5000/api/diary/recordUserHistory`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody),
+    })
+        .catch(error => console.error(error))
+  }
 
   return (
     <>

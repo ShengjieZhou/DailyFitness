@@ -42,8 +42,23 @@ function Video() {
         setSelectedOption(data[random].value);
       })
       .catch(error => console.log(error));
+    recordSearchHistory(selectedOption);
   };
 
+  const recordSearchHistory = (data) => {
+    const requestBody = {
+      object: data,
+      target: "Video"
+    };
+    fetch(`http://localhost:5000/api/diary/recordUserHistory`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody),
+    })
+        .catch(error => console.error(error))
+  }
 
   return (
     <>

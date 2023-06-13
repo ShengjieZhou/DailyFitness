@@ -1,22 +1,37 @@
 const axios = require('axios');
-const dbName = 'userHistory';
-const cache = require('CacheManager');
+const dbName = 'userhistory';
+const cache = require('./CacheManager');
 
-const UserHistoryService = (dbAddress) => {
+function UserHistoryService(dbAddress) {
+    this.dbAddress = dbAddress;
     // record users' search history in the database
-    const recordSearchHistory = (object) => {
-        const timestamp = new Date().toISOString();
+    const recordSearchHistory = (object, target) => {
+        const timestamp = new Date().toLocaleString('fr-FR', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: true
+        }).replace(',', '');
         // define the elements needed to be record
         const record = {
             time: timestamp,
-            object: object
+            object: object,
+            target: target
         };
-        return axios.post(`${dbAddress}/${dbName}`, record)
+        const jsonRecord = JSON.stringify(record);
+        return axios.post(`${dbAddress}/${dbName}`, jsonRecord, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
     }
 
     // fetch users' search history
     const fetchSearchHistory = () => {
-        return axios.get(`${dbAddress}/${dbName}`)
+        return axios.get(`${dbAddress}${dbName}/_design/userHistory/_view/all_history`)
     }
 
     // fetch popular search history by id with cache
@@ -30,7 +45,7 @@ const UserHistoryService = (dbAddress) => {
         }
 
         // Fetch popular history from the database
-        const response = await axios.get(`${dbAddress}/${dbName}/${historyId}`);
+        const response = await axios.get(`${dbAddress}${dbName}/${historyId}`);
 
         // Store the fetched data in cache
         cache.set(cacheKey, response.data);
@@ -39,8 +54,8 @@ const UserHistoryService = (dbAddress) => {
     };
 
     // delete users' search history by id
-    const deleteSearchHistory = (historyId) => {
-        return axios.delete(`${dbAddress}/${dbName}/${historyId}`);
+    const deleteSearchHistory = (historyId, rev) => {
+        return axios.delete(`${dbAddress}${dbName}/${historyId}?rev=${rev}`);
     }
 
     return {
@@ -48,6 +63,5 @@ const UserHistoryService = (dbAddress) => {
     };
 }
 
-//export default UserHistoryService;
 module.exports = UserHistoryService;
 

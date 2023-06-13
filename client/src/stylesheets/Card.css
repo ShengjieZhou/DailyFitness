@@ -2,17 +2,23 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    margin-right: -10px; /* 保持最右边的卡片与屏幕右边的距离 */
+    margin-right: -10px; /* Keep the distance between the rightmost card and the right side of the screen */
 }
 
 .my-card {
-    flex: 0 0 calc(25% - 15px); /* 一行显示4个卡片，保持相同宽度和间距 */
-    height: 128px;
-    margin-bottom: 10px; /* 保持卡片之间的垂直间距 */
-    margin-right: 15px; /* 保持卡片之间的距离 */
-    border: 1px solid #ccc; /* 设置细边框 */
-    border-radius: 8px; /* 设置圆角 */
+    flex: 0 0 calc(25% - 15px); /* Display 4 cards in one row, keeping the same width and spacing */
+    height: 96px;
+    margin-bottom: 10px; /* Maintain vertical spacing between cards */
+    margin-right: 15px; /* Keep distance between cards */
+    border: 1px solid #ccc;
+    border-radius: 8px;
     position: relative;
+}
+
+.my-card-text {
+    padding-top: 5px;
+    padding-left: 16px;
+    text-align: start;
 }
 
 .delete-button {

@@ -31,6 +31,7 @@ export default function Calorie() {
             console.log(err.message);
             setError(true);
         }
+        recordSearchHistory(answer);
     }
 
     function handleTextareaChange(e) {
@@ -70,6 +71,20 @@ export default function Calorie() {
         }
     }
 
+    const recordSearchHistory = (data) => {
+        const requestBody = {
+            object: data,
+            target: "Dietary"
+        };
+        fetch(`http://localhost:5000/api/diary/recordUserHistory`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody),
+        })
+            .catch(error => console.error(error))
+    }
 
     return (
         <>
