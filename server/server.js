@@ -1,5 +1,6 @@
 const UserServiceController = require("./Controller/UserServiceController");
 const RecipeController = require("./Controller/RecipeController");
+const VideoController = require("./Controller/VideoController");
 
 const express = require('express');
 const cors = require('cors');
@@ -12,7 +13,7 @@ const PORT = 5000;
 /**
  * database connection
  */
-const service = 'http://localhost:5984/';
+const service = 'http://127.0.0.1:5984/';
 const username = 'admin';
 const password = 'Password';
 
@@ -51,15 +52,34 @@ app.get('/api/recipe', (req, res) => {
 
 //add recipe 
 app.post('/api/newRecipe', (req, res) => {
-  let newData = req.body;
-  RecipeController(req, res, service, headers).addRecipe(newData);
+    let newData = req.body;
+    RecipeController(req, res, service, headers).addRecipe(newData);
 });
 
-app.post('/api/recordUserHistory', (req, res) => UserServiceController(req, res, service).recordSearchHistory());
+// record user's search history
+app.post('/api/diary/recordUserHistory', (req, res) => UserServiceController(req, res, service).recordSearchHistory());
 
-app.delete('/api/deleteUserHistory/:historyId',(req, res) => {
+// fetch user's search history
+app.get('/api/diary/fetchUserHistory', (req, res) => UserServiceController(req, res).fetchSearchHistory());
+
+// delete user's search history by id
+app.delete('/api//diary/deleteUserHistory/:historyId', (req, res) => {
     const {historyId} = req.params;
-    UserServiceController(req,res,service).deleteSearchHistory(historyId)
+    UserServiceController(req, res, service).deleteSearchHistory(historyId)
+});
+
+app.get('/api/places/nearbysearch', async (req, res) => {
+    const { location } = req.query;
+    const apiUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json`;
+    fetch(apiUrl + '?location=' + location + '&radius=5000&type=gym&key=AIzaSyBZjmD-a2Gdodaut8MWuZHGAtz3Euso0qQ')
+      .then(res => res.json())
+      .then(data => res.json(data))
+      .catch(err => console.error(err));
+});
+
+app.get('/api/video', (req, res) => {
+    const { topic } = req.query;
+    VideoController(req, res, service, headers).getVideo(topic);
 });
 
 //get dietary recommendation
