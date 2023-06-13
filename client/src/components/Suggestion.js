@@ -12,7 +12,7 @@ export default function Suggestion({ data }) {
         return null;
     }
     return (
-        <div className="pt-5 text-base">
+        <div className="my-8 text-base">
             {data.dietLabels.length !==0 && <p>Analysis of your dietary:</p>}
             <ul className="list-disc pt-4">
                 {data.dietLabels.map((label, index) => (
