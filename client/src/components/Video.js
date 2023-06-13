@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import YouTube from 'react-youtube';
 import Header from './Header';
 import Sidebar from './Sidebar';
+import '../stylesheets/video.css'
 
 
 function Video() {

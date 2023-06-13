@@ -1,0 +1,18 @@
+select {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* 下拉列表样式 */
+select:focus {
+    outline: none;
+    border-color: #2196f3;
+    box-shadow: 0 0 5px #2196f3;
+}
+
+p {
+    color: #666;
+    font-size: 16px;
+}
