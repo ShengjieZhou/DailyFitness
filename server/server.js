@@ -5,6 +5,7 @@ const VideoController = require("./Controller/VideoController");
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 const app = express();
 
 const PORT = 5000;
@@ -13,7 +14,6 @@ const PORT = 5000;
  * database connection
  */
 const service = 'http://127.0.0.1:5984/';
-
 const username = 'admin';
 const password = 'Password';
 
@@ -23,6 +23,13 @@ const headers = {Authorization: `Basic ${credentials}`};
 /**
  * middleware
  */
+app.use('/api/dietary', createProxyMiddleware({
+    target: 'https://api.edamam.com',
+    changeOrigin: true,
+    pathRewrite: {
+      '^/api/dietary': '/api/nutrition-details?app_id=285d285d&app_key=71f2c3d39496a913657716d5af3f17f9'
+    }
+  }));
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -74,6 +81,13 @@ app.get('/api/video', (req, res) => {
     const { topic } = req.query;
     VideoController(req, res, service, headers).getVideo(topic);
 });
+
+//get dietary recommendation
+// app.post('/api/dietary', (req, res) => {
+//     const jsonData = req.body;
+//     // res.send(jsonData);
+//     DietaryController(req, res).getDietary(jsonData);
+// });
 
 /**
  * Startup server
