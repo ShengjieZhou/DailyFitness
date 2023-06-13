@@ -18,14 +18,18 @@ const UserServiceController = (req, res, dbAddress) => {
     };
 
     const recordSearchHistory = () => {
-        handleRequest(userHistoryService.recordSearchHistory(object),'搜索历史已保存:','保存搜索历史失败:')
+        handleRequest(userHistoryService.recordSearchHistory(object),'Search history saved:','Search history failed to save:')
+    }
+
+    const fetchSearchHistory = () => {
+        handleRequest(userHistoryService.fetchSearchHistory(),'Fetch History Success:','Failed to fetch history:')
     }
 
     const deleteSearchHistory = (historyId) => {
-        handleRequest(userHistoryService.deleteSearchHistory(historyId),'历史记录已删除:', '删除历史记录失败:')
+        handleRequest(userHistoryService.deleteSearchHistory(historyId),'History deleted:', 'History failed to delete:')
     }
     return {
-        recordSearchHistory, deleteSearchHistory
+        recordSearchHistory, fetchSearchHistory, deleteSearchHistory
     };
 }
 
