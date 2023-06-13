@@ -36,7 +36,9 @@ function Video() {
       .then(response => response.json())
       .then(data => {
         console.log(data);
-        setSelectedOption(data[0].value);
+        let length = data.length
+        let random = Math.floor(Math.random() * length);
+        setSelectedOption(data[random].value);
       })
       .catch(error => console.log(error));
   };
