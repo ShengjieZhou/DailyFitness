@@ -1,6 +1,7 @@
 const UserServiceController = require("./Controller/UserServiceController");
 const RecipeController = require("./Controller/RecipeController");
 const VideoController = require("./Controller/VideoController");
+const DietaryController = require("./Controller/DietaryController");
 
 const express = require('express');
 const cors = require('cors');
@@ -27,9 +28,9 @@ app.use('/api/dietary', createProxyMiddleware({
     target: 'https://api.edamam.com',
     changeOrigin: true,
     pathRewrite: {
-      '^/api/dietary': '/api/nutrition-details?app_id=285d285d&app_key=71f2c3d39496a913657716d5af3f17f9'
+        '^/api/dietary': '/api/nutrition-details?app_id=285d285d&app_key=71f2c3d39496a913657716d5af3f17f9'
     }
-  }));
+}));
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -64,7 +65,7 @@ app.get('/api/diary/fetchUserHistory', (req, res) => UserServiceController(req, 
 
 // delete user's search history by id
 app.delete('/api//diary/deleteUserHistory/:historyId', (req, res) => {
-    const {historyId} = req.params;
+    const { historyId } = req.params;
     UserServiceController(req, res, service).deleteSearchHistory(historyId)
 });
 
@@ -72,15 +73,21 @@ app.get('/api/places/nearbysearch', async (req, res) => {
     const { location } = req.query;
     const apiUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json`;
     fetch(apiUrl + '?location=' + location + '&radius=5000&type=gym&key=AIzaSyBZjmD-a2Gdodaut8MWuZHGAtz3Euso0qQ')
-      .then(res => res.json())
-      .then(data => res.json(data))
-      .catch(err => console.error(err));
+        .then(res => res.json())
+        .then(data => res.json(data))
+        .catch(err => console.error(err));
 });
 
 app.get('/api/video', (req, res) => {
     const { topic } = req.query;
     VideoController(req, res, service, headers).getVideo(topic);
 });
+
+app.get('/api/advice', (req, res) => {
+    const labels = req.query.labels;
+    console.log(labels);
+    DietaryController(req, res, service, headers).getDietary(labels);
+})
 
 //get dietary recommendation
 // app.post('/api/dietary', (req, res) => {
