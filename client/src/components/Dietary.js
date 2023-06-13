@@ -22,8 +22,10 @@ export default function Calorie() {
             const response = await submitForm(parsedAnswer);
             setDiataryResult(response);
             setStatus('success');
+            setError(false);
         } catch (err) {
             setStatus('typing');
+            console.log(err.message);
             setError(true);
         }
     }
@@ -33,7 +35,6 @@ export default function Calorie() {
     }
 
     async function submitForm(answer) {
-        setError(false);
         let requestOptions = {
             method: 'POST',
             headers: {
@@ -42,7 +43,6 @@ export default function Calorie() {
             },
             body: JSON.stringify({ title: 'default', ingr: answer })
         };
-        console.log(requestOptions);
         try {
             const response = await fetch(api, requestOptions);
             if (!response.ok) {
@@ -74,7 +74,8 @@ export default function Calorie() {
                                 <textarea style={{ width: '60%', height: '10rem' }} className="rounded-md border border-slate-300 py-2 pl-2 pr-2 shadow-sm focus:ring-sky-500 focus:ring-1" value={answer} onChange={handleTextareaChange} disabled={status === 'submitting'} />
                                 <br /><br />
                                 <button className="mt-1 active:scale-[.98] transition-transform inline-flex font-bold items-center outline-none focus:outline-none focus-visible:outline focus-visible:outline-link focus:outline-offset-2 bg-link text-white hover:bg-opacity-80 text-base rounded-full px-4 py-2" disabled={answer.length === 0 || status === 'submitting'}>Submit</button>
-                                {error !== null && <p className="Error">{error.message}</p>}
+                                {error && <p className="text-red-50 pt-5">We cannot calculate the nutrition for some ingredients.
+                                    Please check the ingredient spelling or if you have entered a quantities for the ingredients.</p>}
                             </form>
                             <IngredientTable data={diataryResult} />
                             <Suggestion data={diataryResult} />

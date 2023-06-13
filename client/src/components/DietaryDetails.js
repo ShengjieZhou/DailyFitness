@@ -60,7 +60,7 @@ export default function ReceiptResult({ data }) {
                             </tr>
                             <tr>
                                 <th colSpan="2">
-                                    <b>Energy</b> {data.totalNutrients.ENERC_KCAL.quantity} kcal
+                                    <b>Energy</b> {data.totalNutrients.ENERC_KCAL.quantity.toFixed(0)} kcal
                                 </th>
                                 <td>
                                     <b>{data.totalDaily.ENERC_KCAL.quantity.toFixed(2)} %</b>

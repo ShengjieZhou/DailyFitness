@@ -46,9 +46,5 @@ export default function IngredientTable({ data }) {
                 ))}
             </tbody>
         </table>
-
-
-
-
     );
 }
