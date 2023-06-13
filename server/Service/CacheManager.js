@@ -15,6 +15,7 @@ class Cache {
         this.cache.delete(key);
     }
 
+
     clear() {
         this.cache.clear();
     }
